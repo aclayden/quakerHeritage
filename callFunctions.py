@@ -6,7 +6,7 @@ url = "https://heritage.quaker.org.uk/"
 pdfList = gwd.getUrls(url)
 dictList = []
 #for pdf in pdfList ####DO NOT UNCOMMENT UNTIL GO LIVE####
-for pdf in pdfList[1:2]:
+for pdf in pdfList[1:5]:
     dictList.append(gwd.pdfDataExtract(pdf))  
 
 #compile values into a csv
