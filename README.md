@@ -8,6 +8,7 @@ Project to support the collation of PDF data on the Quaker Meeting House Heritag
 * bs4
 * csv
 * io
+* numpy
 * pandas
 * pdfplumber
 * re
