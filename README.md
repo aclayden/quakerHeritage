@@ -23,11 +23,12 @@ This project has been specifically coded for the Quaker Meeting House Heritage P
 
 ## Contributing
 
-Feedback is both welcome and encouraged. If you use the code, or just find issues while browsing, please report them by [clicking here](github.com/aclayden/quakerHeritage/issues)
+Feedback is both welcome and encouraged. If you use the code, or just find issues while browsing, please report them by [clicking here.](github.com/aclayden/quakerHeritage/issues)
 
 ## Licence
 
 Until I figure out how licenses actually work, all rights remain reserved over this code as of the creation date of this repository. All previous versions of the code, branches created by Alex Clayden, and documentation created by Alex Clayden should be considered the intellectual property of the author irrespective of individual declarations or file headings. 
 
-##Contact
+## Contact
+
 For queries please reach out via GitHub.
