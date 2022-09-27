@@ -23,11 +23,12 @@ def pdfDataExtract(url):
     try:    
         pdf = pdfplumber.open(temp)
         all_text = ''
-        itemDict["Meeting Name"] = url.split('/')[-1].split('.')[0]
-        header_data = pdf.pages[0].extract_text().splitlines()[0:3]
-        itemDict["Meeting Full Name"] = header_data[0].strip()
-        itemDict["Meeting House Address"] = header_data[1].strip()
-        itemDict[header_data[2].split(': ')[0]] = header_data[2].split(': ')[1].strip()
+        itemDict["Meeting Name"] = url.split('/')[-1].split('.')[0].replace("%20", " ")
+        header_list= pdf.pages[0].extract_text().splitlines()[0:5]
+        header_data = [x.strip() for x in header_list if x.strip()]
+        itemDict["Meeting Full Name"] = header_data[0]
+        itemDict["Meeting House Address"] = header_data[1]
+        itemDict[header_data[2].split(': ')[0]] = header_data[2].split(': ')[1]
 
         for pdf_page in pdf.pages:
             single_page_text = pdf_page.extract_text()

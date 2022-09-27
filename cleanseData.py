@@ -1,13 +1,9 @@
 import pandas as pd
-import getWebData as gwd
+import numpy as np
 
 # collate all data
-def createDataframe(url):
-    pdfList = gwd.getUrls(url)
-    dictList = []
+def createDataframe(dictList):
     data = []
-    for pdf in pdfList[1:4]:
-        dictList.append(gwd.pdfDataExtract(pdf))  
     data.append([i for i in dictList[0].keys()])
     for dct in dictList:
         data.append([i for i in dct.values()])
@@ -17,17 +13,23 @@ def createDataframe(url):
 
 #transform differing data to create consistentcy in the database 
 def hygieneDataframe(df):
-    df['Date'] = df['Date'].str.extract(r'^(\d{4})', expand=False)
+    df.rename(columns={'Historic Environment Scotland': 'Historic locality', 'Reference': 'Listing Reference'}, inplace = True)
+    try:
+        df['Listed status'] = df['Listed status'].apply(lambda x: 'Not listed' if 'No' in x else x)
+        df['Listing Reference'] = df['Listing Reference'].apply(lambda x: 'N/A' if ('Not applicable' in x or x.upper() == 'N/A') else x)
+        df['Heritage at Risk'] = np.where(df['Listed status'].str.upper() == 'NOT LISTED', 'No', df['Heritage at Risk'])
+        df['Date'] = df['Date'].str.extract(r'^(\d{4})', expand=False)
+        df['Architect'] = df['Architect'].replace({'Not established': 'Unknown', 'not established': 'Unknown', 'None': 'Unknown',',':';'}, regex = True)
+        df['Name of contact made on site'] = df['Name of contact made on site'].replace(' and ', ';')
+        df['Date of visit'] = pd.to_datetime(df['Date of visit']).apply(lambda x: x.date())
+        df['Associated buildings and sites'] = df['Associated buildings and sites'].apply(lambda x: 'N/A' if ('Not applicable' in x or 'None' in x) else x)
+    except:
+        pass
     
     return df
 
+def saveToCSV(df, filepath):
+    df.to_csv(filepath, encoding='utf-8-sig')
 
-#convert string dates to workable dates
-# testDate = df.at[0, "Date of visit"]
-# testDate = pd.to_datetime(testDate, errors='raise',dayfirst=True)
-# testDate += pd.offsets.DateOffset(years=5)
-# print(testDate)
-
-df = createDataframe("https://heritage.quaker.org.uk/")
-df = hygieneDataframe(df)
-print(df['Date'])
+def loadFromCSV(filepath):
+    return pd.read_csv(filepath)
