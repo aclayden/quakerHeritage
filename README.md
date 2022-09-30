@@ -2,20 +2,17 @@
 Project to support the collation of PDF data on the Quaker Meeting House Heritage Project into a database
 
 [![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3100/)
+![PyPI](https://img.shields.io/badge/PyPI-v0.0.3-blue)
 ![status](https://img.shields.io/badge/status-released-green)
 
 ## Dependencies
 
 ### Required Python Libaries
 * bs4
-* csv
-* io
 * numpy
 * pandas
 * pdfplumber
-* re
 * requests
-* urllib3
 
 ### Disclaimer
 
