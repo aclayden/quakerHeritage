@@ -21,6 +21,10 @@ Project to support the collation of PDF data on the Quaker Meeting House Heritag
 
 This project has been specifically coded for the Quaker Meeting House Heritage Project, both in hard-coded variables, and hard-coded parameters for extracting text. It is a tool to suit a very specific use-case and may not work if used otherwise. The project further depends on the files required being listed online at the URLs provided. If Britain Yearly Meeting takes down the website and associated pdfs, back-ups are available on the Internet Archive's Wayback Machine. The code can also be adapted to work with locally downloaded pdfs. go to Appendix: Hosting Errors to note the required changes. 
 
+## Installation
+
+    pip install quakerheritage
+
 ## Contributing
 
 Feedback is both welcome and encouraged. If you use the code, or just find issues while browsing, please report them by [clicking here.](github.com/aclayden/quakerHeritage/issues)
