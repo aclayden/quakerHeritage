@@ -1,3 +1,12 @@
+Metadata-Version: 2.1
+Name: quakerheritage
+Version: 0.0.2
+Author: 
+Author-email: 
+License: AGPL
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+
 # quakerHeritage
 Project to support the collation of PDF data on the Quaker Meeting House Heritage Project into a database
 
