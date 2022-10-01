@@ -14,6 +14,8 @@ In order to run the code, simply open your terminal and run the following:
 
     python -m quakerheritage.build
 
+You will be prompted to select a location for the csv output to be placed. Once chosen, the code will run quietly in the background until complete, and the csv available at your chosen directory as 'quakerHeritageDB.csv'
+
 ## build
 Unifies the functional modules and runs the main code to create a formatted Pandas DataFrame from pdfs held by Britain Yearly Meeting.
 
