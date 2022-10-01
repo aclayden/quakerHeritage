@@ -2,7 +2,7 @@ LICENSE.txt
 README.md
 setup.py
 quakerheritage/__init__.py
-quakerheritage/callFunctions.py
+quakerheritage/build.py
 quakerheritage/cleanseData.py
 quakerheritage/getWebData.py
 quakerheritage.egg-info/PKG-INFO
