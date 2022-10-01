@@ -22,6 +22,7 @@ This module runs automatically when opened, in concert with the other modules in
 This module contains the following functions:
 
 - `getOnlineData(url)` - Collects pdfs from webpage, extracts text to dictionary, creates DataFrame from all dicitonaries and hygienes data.
+- `main()` - executes automatically to run the entire project
 
 #### getOnlineData(url: str)
 Collect online data and merge it into a Pandas DataFrame
