@@ -22,6 +22,14 @@ This project has been specifically coded for the Quaker Meeting House Heritage P
 
     pip install quakerheritage
 
+# How-To Use
+
+Simply run the following command:
+
+    python -m quakerheritage.build
+
+You will be prompted to select a location for the csv output to be placed. Once chosen, the code will run quietly in the background until complete, and the csv available at your chosen directory as 'quakerHeritageDB.csv'
+
 ## Contributing
 
 Feedback is both welcome and encouraged. If you use the code, or just find issues while browsing, please report them by [clicking here.](github.com/aclayden/quakerHeritage/issues)
