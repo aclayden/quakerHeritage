@@ -1,9 +1,34 @@
-import urllib3, pdfplumber, io, requests, re
+# quakerheritage/getWebData.py
+
+"""Main web function that collects url data and extracts text from each pdf examined.
+
+This module allows the user to extract core data from formatted pdfs on the Britain Yearly Meeting website.
+
+This module contains the following functions:
+
+- `getUrls(url)` - Filters the Quaker Heritage Project's website for the url links to pdfs.
+- `pdfDataExtract(url)` - Extracts core data text from a single pdf passed in as a url link.
+"""
+
+import io
+import urllib3
+import re
+
 from bs4 import BeautifulSoup, SoupStrainer
+import pdfplumber
+import requests
 
 
-# connect to website and get list of all pdfs, removing page navigation values
-def getUrls(url):
+
+def getUrls(url: str) -> list:
+    """Short function to isolate links from the chosen web page. As the webpage is pre-selected, they are all known to be pdf files.
+
+    Args:
+        url (string): the pre-selected web address.
+
+    Return:
+        pdfList(array): a Python list containing all the links extracted from the page. 
+    """
     pdfList = []
     response = requests.get(url)
     for link in BeautifulSoup(response.text, 'html.parser', parse_only=SoupStrainer('a')):
@@ -11,10 +36,15 @@ def getUrls(url):
             pdfList.append(url + link['href'])
     return pdfList
 
-# All pdfs are formatted identically and contain common parameters for core data. 
-# The below isolates items 1.1-1.18 and uses a series of splitting logics to isolate the dictionary key and value
+def pdfDataExtract(url: str) -> dict:
+    """Extracts text data from pdfs and passes it into a dictionary
 
-def pdfDataExtract(url):
+    Args:
+        url (string): a single url which must be a pdf file storage location.
+
+    Return:
+        itemDict (array): Python dictionary containing keys and values extracted from text.
+    """
     itemDict = {}
 
     http = urllib3.PoolManager()
