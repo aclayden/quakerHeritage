@@ -10,4 +10,4 @@ Modules exported by this package:
 `cleanseData`: Runs Pandas functionality to merge text data into workable DataFrame and creates consistent data quality\n
 
 """
-__version__ = "0.0.5"
+__version__ = "0.0.7"

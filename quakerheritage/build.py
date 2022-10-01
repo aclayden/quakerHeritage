@@ -12,14 +12,14 @@ This module contains the following functions:
 - `getOnlineData(url)` - Collects pdfs from webpage, extracts text to dictionary, creates DataFrame from all dicitonaries and hygienes data.
 - `main()` - executes automatically to run the entire project
 """
-print(__package__, __name__)
+
 import tkinter as tk
 from tkinter import filedialog
 
 import pandas as pd
 
-from quakerheritage.utils import getWebData as gwd
-from quakerheritage.utils import cleanseData as cd
+from . import getWebData as gwd
+from . import cleanseData as cd
 
 url = "https://heritage.quaker.org.uk/"
 
@@ -34,7 +34,7 @@ def getOnlineData(url: str) -> pd.DataFrame:
     """
     pdfList = gwd.getUrls(url)
     dictList = []
-    for pdf in pdfList[1:3]: 
+    for pdf in pdfList: 
         dictList.append(gwd.pdfDataExtract(pdf))
     df = cd.createDataFrame(dictList)
     df = cd.hygieneDataFrame(df)
