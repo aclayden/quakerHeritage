@@ -1,1 +1,1 @@
-src/quakerheritage
+quakerheritage
