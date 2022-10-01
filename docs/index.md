@@ -11,6 +11,7 @@ The project at present isn't robust enough to require multiple pages, nor length
 ## How-To
 
 In order to run the code, simply open your terminal and run the following:
+
     python -m quakerheritage.build
 
 ## build
