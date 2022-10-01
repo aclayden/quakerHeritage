@@ -8,7 +8,13 @@ The aim of this project is to assist the Society of Friends with making the most
 
 The project at present isn't robust enough to require multiple pages, nor lengthy explanations of configurable functions. The design principles of the project were to build a tailored set of code modules to solve a very specific problem. As a result, the modules and functions in this project could be adapted for other use cases, but perform best when used without amendment to create the csv output from the Heritage Project data. 
 
-## callFunctions
+## How-To
+
+In order to run the code, simply open your terminal and run the following:
+
+    python -m quakerheritage.build
+
+## build
 Unifies the functional modules and runs the main code to create a formatted Pandas DataFrame from pdfs held by Britain Yearly Meeting.
 
 This module runs automatically when opened, in concert with the other modules in this package. 
