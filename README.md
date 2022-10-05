@@ -29,7 +29,7 @@ Simply run the following command:
 
     python -m quakerheritage.build
 
-You will be prompted to select a location for the csv output to be placed. Once chosen, the code will run quietly in the background until complete, and the csv available at your chosen directory as 'quakerHeritageDB.csv'
+You will be prompted to select a location for the csv output to be placed. Once chosen, the code will run quietly in the background until complete, and the csv available at your chosen directory as 'quakerHeritageDB.csv'. Further documentation can be found [here.](https://github.com/aclayden/quakerHeritage/blob/main/docs/index.md)
 
 ## Contributing
 
