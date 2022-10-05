@@ -3,8 +3,8 @@ README.md
 setup.py
 quakerheritage/__init__.py
 quakerheritage/build.py
-quakerheritage/cleanseData.py
-quakerheritage/getWebData.py
+quakerheritage/cleanse_data.py
+quakerheritage/get_web_data.py
 quakerheritage.egg-info/PKG-INFO
 quakerheritage.egg-info/SOURCES.txt
 quakerheritage.egg-info/dependency_links.txt

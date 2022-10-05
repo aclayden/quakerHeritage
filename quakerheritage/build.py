@@ -18,8 +18,8 @@ from tkinter import filedialog
 
 import pandas as pd
 
-import get_web_data as gwd
-import cleanse_data as cd
+from . import get_web_data as gwd
+from . import cleanse_data as cd
 
 url = "https://heritage.quaker.org.uk/"
 
