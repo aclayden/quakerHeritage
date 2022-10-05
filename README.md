@@ -1,7 +1,7 @@
 # quakerHeritage
 Project to support the collation of PDF data on the Quaker Meeting House Heritage Project into a database
 
-[![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3100/)
+[![Python 3.10.7](https://img.shields.io/badge/python-3.10.7-blue.svg)](https://www.python.org/downloads/release/python-3100/)
 ![PyPI](https://img.shields.io/badge/PyPI-v0.0.8-blue)
 ![status](https://img.shields.io/badge/status-released-green)
 
