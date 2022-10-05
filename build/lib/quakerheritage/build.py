@@ -34,7 +34,7 @@ def getOnlineData(url: str) -> pd.DataFrame:
     """
     pdfList = gwd.getUrls(url)
     dictList = []
-    for pdf in pdfList[1:3]: 
+    for pdf in pdfList: 
         dictList.append(gwd.pdfDataExtract(pdf))
     df = cd.createDataFrame(dictList)
     df = cd.hygieneDataFrame(df)
