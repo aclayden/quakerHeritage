@@ -2,55 +2,66 @@
 
 """Main web function that collects url data and extracts text from each pdf examined.
 
-This module allows the user to extract core data from formatted pdfs on the Britain Yearly Meeting website.
+This module allows the user to extract core data from formatted PDFs on the Britain Yearly Meeting website.
 
 This module contains the following functions:
 
-- `get_urls(url)` - Filters the Quaker Heritage Project's website for the url links to pdfs.
+- `get_urls(url)` - Filters the Quaker Heritage Project's website for the url links to PDFs.
 - `pdf_data_extract(url)` - Extracts core data text from a single pdf passed in as a url link.
 """
 
 import io
-import urllib3
 import re
 
-from bs4 import BeautifulSoup, SoupStrainer
+import bs4
 import pdfplumber
 import requests
-
+import urllib3
 
 
 def get_urls(url: str) -> list:
-    """Short function to isolate links from the chosen web page. As the webpage is pre-selected, they are all known to be pdf files.
+    """Helper function to isolate links from the chosen web page. As
+    the webpage is pre-selected, they are all known to be PDF files.
 
-    Args:
-        url (string): the pre-selected web address.
+    Parameters
+    -----------
+    url :class:`str`
+        The pre-selected web address.
 
-    Return:
-        pdf_list(list): a Python list containing all the links extracted from the page. 
+    Return a list containing all the links extracted from the page.
     """
-    pdf_list = []
-    response = requests.get(url)
-    for link in BeautifulSoup(response.text, 'html.parser', parse_only=SoupStrainer('a')):
-        if link.has_attr('href') and link['href'][0] != "#":
-            pdf_list.append(url + link['href'])
-    return pdf_list
+
+    soup: bs4.BeautifulSoup = bs4.beautifulSoup(
+        markup=requests.get(url).text,
+        features='html.parser',
+        parse_only=bs4.SoupStrainer('a')
+    )
+
+    return [
+        (url + link['href'])
+        for link in soup
+        if link.has_attr('href') and (link['href'][0] != '#')
+    ]
+
 
 def pdf_data_extract(url: str) -> dict:
-    """Extracts text data from pdfs and passes it into a dictionary
+    """Extracts text data from PDFs and passes it into a dictionary
 
-    Args:
-        url (string): a single url which must be a pdf file storage location.
+    Parameters
+    -----------
+    url: :class:`str`
+        A single URL to a PDF file storage location.
 
-    Return:
-        item_list (dict): Python dictionary containing keys and values extracted from text.
+    Returns a dictionary containing the core data from the PDF as
+    :class:`dict`.
     """
+
     http = urllib3.PoolManager()
     temp = io.BytesIO()
-    temp.write(http.request("GET", url).data)  
+    temp.write(http.request("GET", url).data)
     pdf = pdfplumber.open(temp)
     all_text = ''
-    
+
     header_list= pdf.pages[0].extract_text().splitlines()[0:5]
     header_data = [x.strip() for x in header_list if x.strip()]
     try:
@@ -72,19 +83,33 @@ def pdf_data_extract(url: str) -> dict:
         item_list = debug_problem_list(original_headers, split_text)
     clean_list = [item.replace('\n', '') for item in item_list]
     return clean_list
- 
-def debug_problem_list(header_list:list, split_text: list) -> list:
-    """Known data issues within the source pdfs are handled in this function
 
-    Args:
-        header_list (list): a list of the header data for the pdf
-        split_text (list): a list of the core data 1.1-1.18, split by index
 
-    Return:
-        item_list (list): combined list of header data and the hygiened core data for the problem pdfs
+def debug_problem_list(header_list: list, split_text: list) -> list:
+    """Fix known data issues within the source PDFs.
+
+    Parameters
+    -----------
+    header_list: :class:`list`
+        A list of the header data for the PDF.
+    split_text: :class:`list`
+        A list of the core data 1.1-1.18, separated by index.
+
+    Returns the combined list of header data and hygiened core data for
+    the problem PDFs as a :class:`list`.
     """
-    
-    no_nulls_list = [x for x in split_text if x.strip()] 
-    no_blanks_list = [item.replace(':  \n', ': Unknown \n').replace(': \n', ': Unknown \n').replace('- Cadw', ': Cadw') for item in no_nulls_list] 
-    item_list = [*header_list, *[item.strip().split(': ')[1].strip() for item in no_blanks_list]]
-    return item_list
+
+    cleaned_split_text = [
+        item
+            .replace(':  \n', ': Unknown \n')
+            .replace(': \n', ': Unknown \n')
+            .replace('- Cadw', ': Cadw')
+        for item
+        in [x for x in split_text if x.strip()]
+    ]
+
+    return header_list + [
+        item.strip().split(': ')[1].strip()
+        for item
+        in cleaned_split_text
+    ]

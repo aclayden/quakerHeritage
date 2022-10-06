@@ -1,13 +1,20 @@
 # quakerheritage/cleanse_data.py
 
-"""Runs Pandas functionality to merge text data into workable DataFrame and creates consistent data quality.
+"""Runs Pandas functionality to merge text data into workable DataFrame
+and creates consistent data quality.
 
-This module allows the user to take the raw data from the Quaker Heritage Project's pdfs and enhances usefulness of data points and types.
+This module allows the user to take the raw data from
+the Quaker Heritage Project's PDFs and enhances usefulness of
+data points and types.
 
 This module contains the following functions:
 
-- `create_dataframe(url)` - Takes a list of dictionaries with varied values and keys and unifies them into a single Pandas DataFrame.
-- `hygiene_dataframe(df)` - Takes the varied data in the DataFrame and applies a regular schema to it for data quality purposes.
+- `create_dataframe(url)` - Takes a list of dictionaries with varied
+                            values and keys and unifies them into a
+                            single Pandas DataFrame.
+- `hygiene_dataframe(df)` - Takes the varied data in the DataFrame and
+                            applies a regular schema to it for data
+                            quality purposes.
 """
 
 import pandas as pd
@@ -15,36 +22,67 @@ import numpy as np
 
 # collate all data
 def create_dataframe(data_list: list) -> pd.DataFrame:
-    """Concatenates dictionary values and transforms them into a Pandas DataFrame.
+    """Concatenates dictionary values and transforms them into a Pandas
+    DataFrame.
 
-    Args:
-        data_list (list): A list object of dictionaries created from pdfs.
+    Parameters
+    -----------
+    data_list: :class:`list`
+        A list object of dictionaries created from PDFs.
 
-    Return:
-        df (Pandas DataFrame): A raw and unhygiened Pandas DataFrame.
+    Returns raw, unhygiened data as :class:`pandas.DataFrame`.
     """
-    headers = ['Meeting House Name', 'Meeting House Full Name', 'Address', 'National Grid Reference', 'Area Meeting', 'Property Registration Number', 'Owner', 'Local Planning Authority', 'Historic Locality', 'Civil Parish', 'Listed Status', 'Listing Reference', 'Conservation Area', 'Scheduled Ancient Monument', 'Heritage at Risk', 'Date', 'Architect(s)', 'Date of visit', 'Name of report author', 'Name of contact', 'Associated buildings and sites', 'Attached burial ground']
-    df = pd.DataFrame(data_list, columns = headers)
+
+    headers = [
+        'Meeting House Name',
+        'Meeting House Full Name',
+        'Address',
+        'National Grid Reference',
+        'Area Meeting',
+        'Property Registration Number',
+        'Owner',
+        'Local Planning Authority',
+        'Historic Locality',
+        'Civil Parish', 'Listed Status',
+        'Listing Reference',
+        'Conservation Area',
+        'Scheduled Ancient Monument',
+        'Heritage at Risk',
+        'Date',
+        'Architect(s)',
+        'Date of visit',
+        'Name of report author',
+        'Name of contact',
+        'Associated buildings and sites',
+        'Attached burial ground'
+    ]
+    df = pd.DataFrame(data_list, columns=headers)
     #df = df.rename(columns=df.iloc[0]).drop(df.index[0]).reset_index(drop=True)
     return df
 
+
 def bulk_hygiene_dataframe(df: pd.DataFrame) -> pd.DataFrame:
-    """Data quality function that iterates through selected columns within the DataFrame and corrects variant values.
+    """Data quality function that iterates through selected columns
+    within the DataFrame and corrects variant values.
 
-    Example:
-        'Date of Visit': 
-            Old Value: 5th July 2015
-            Hygiened Value: 2015-07-05
-        'Date':
-            Old Value: c1864-70, 1965; 2005
-            Hygiened Value: 1864
+    Example
+    --------
+    'Date of Visit':
+        Old Value: 5th July 2015
+        Hygiened Value: 2015-07-05
+    'Date':
+        Old Value: c1864-70, 1965; 2005
+        Hygiened Value: 1864
 
-    Args:
-        df (Pandas DataFrame): A raw and unhygiened DataFrame.
+    Parameters
+    -----------
+    df: :class:`pandas.DataFrame`
+        A raw and unhygiened DataFrame.
 
-    Return:
-        df (Pandas DataFrame): The same DataFrame with all formatting applied for data quality.
+    Returns :param:`df` with formatting applied to select key-value
+    pairs.
     """
+
     try:
         df['Listed Status'] = df['Listed Status'].apply(lambda x: 'Not listed' if 'No' in x else x)
         df['Listing Reference'] = df['Listing Reference'].apply(lambda x: 'N/A' if ('Not applicable' in x or x.upper() == 'N/A') else x)
@@ -61,16 +99,22 @@ def bulk_hygiene_dataframe(df: pd.DataFrame) -> pd.DataFrame:
         for row in df['Meeting House Name']:
             df['Meeting House Name'] = df['Meeting House Name'].replace('Heritage Report AHP Jan 2017', '')
 
-    except:
-        pass
-    
+    except (Exception,):
+        pass  # Ignore any errors.
+
     return df
 
+
 def save_to_csv(df: pd.DataFrame, file_path: str) -> None:
-    """Small function to save CSV with appropriate format.
-    
-    Args:
-        df (Pandas DataFrame): collection of data for Pandas to convert to CSV.
-        file_path (string): desired location for file creation.
+    """Saves the CSV with the appropriate format.
+
+    Parameters
+    -----------
+    df: :class:`pandas.DataFrame`
+        A collection of data for Pandas to convert to CSV.
+    file_path: :class:`str`
+        The absolute or relative path to the target save file.
+
+    Returns ``None``.
     """
     df.to_csv(file_path, encoding='utf-8-sig')
