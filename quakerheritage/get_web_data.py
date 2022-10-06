@@ -31,7 +31,7 @@ def get_urls(url: str) -> list:
     Return a list containing all the links extracted from the page.
     """
 
-    soup: bs4.BeautifulSoup = bs4.beautifulSoup(
+    soup: bs4.BeautifulSoup = bs4.BeautifulSoup(
         markup=requests.get(url).text,
         features='html.parser',
         parse_only=bs4.SoupStrainer('a')
